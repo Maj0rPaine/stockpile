@@ -12,13 +12,6 @@ enum SearchScope: Int {
     case photos = 0
     case collections = 1
     
-    var description: String {
-        switch self {
-        case .photos: return NSLocalizedString("photos", comment: "")
-        case .collections: return NSLocalizedString("collections", comment: "")
-        }
-    }
-    
     static var buttonTitles: [String] {
         return [
             NSLocalizedString("Photos", comment: ""),

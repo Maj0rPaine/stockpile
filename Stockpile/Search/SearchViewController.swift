@@ -22,7 +22,7 @@ class SearchViewController: UIViewController {
         searchController.searchBar.isTranslucent = false
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.delegate = self
-        searchController.searchResultsUpdater = resultsViewController
+        //searchController.searchResultsUpdater = resultsViewController
         searchController.searchBar.scopeButtonTitles = SearchScope.buttonTitles
         
         navigationItem.searchController = searchController
@@ -40,12 +40,20 @@ extension SearchViewController: UISearchBarDelegate {
         }
     }
     
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        resultsViewController.updateViewController(searchController: searchController)
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        resultsViewController.clearResults()
+        resultsViewController.resetResultsViewController()
+    }
+    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         resultsViewController.performSearch(searchController: searchController)
     }
     
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-        resultsViewController.selectedScope = SearchScope(rawValue: selectedScope) ?? .photos
-        resultsViewController.performSearch(searchController: searchController)
+        resultsViewController.setScope(scope: selectedScope, searchController: searchController)
     }
 }

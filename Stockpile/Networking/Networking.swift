@@ -9,35 +9,71 @@
 import Foundation
 
 protocol ImageProvider {
-    func search(query: String, scope: SearchScope, completion: @escaping ([Photo]?) -> Void)
+    func fetch<PhotoType: DecodablePhoto>(resource: Resource, completion: @escaping (PhotoType?) -> Void)
+    func nextPage<PhotoType: DecodablePhoto>(nextURL: URL?, completion: @escaping (PhotoType?) -> Void)
 }
 
 class Networking {
-    let session: URLSession
+    typealias DataTaskCompletionHandler = (Data?, URLResponse?, Error?) -> Void
     
+    let session: URLSession
+        
     init(session: URLSession = .shared) {
         self.session = session
+    }
+    
+    func parseNextURLHeader(completion: @escaping (Data?, URL?) -> Void) -> DataTaskCompletionHandler {
+        return { data, response, _ in
+            var nextURL: URL?
+            
+            if let response = response as? HTTPURLResponse,
+                let linkHeader = response.value(forHTTPHeaderField: "Link") {
+                nextURL = linkHeader.nextURL()
+            }
+            
+            completion(data, nextURL)
+        }
     }
 }
 
 // TODO: Download and cache image URLs
 extension Networking: ImageProvider {
-    func search(query: String, scope: SearchScope, completion: @escaping ([Photo]?) -> Void) {
-        guard let request = Resource.search(query: query, scope: scope).request() else {
+    func fetch<PhotoType: DecodablePhoto>(resource: Resource, completion: @escaping (PhotoType?) -> Void) {
+        guard let request = resource.request() else {
             completion(nil)
             return
         }
         
-        self.session.dataTask(with: request) { (data, _, _) in
-            var decodable: DecodablePhoto?
+        self.session.dataTask(with: request, completionHandler: self.parseNextURLHeader(completion: { data, nextURL in
+            // FIXME: Extend DecodablePhoto
+            var decoded = data?.decode(PhotoType.self)
+            decoded?.nextURL = nextURL
+            completion(decoded)
+        })).resume()
+    }
+    
+    func nextPage<PhotoType: DecodablePhoto>(nextURL: URL?, completion: @escaping (PhotoType?) -> Void) {
+        guard let request = URLRequest.authorized(url: nextURL) else {
+            completion(nil)
+            return
+        }
             
-            if scope == .photos {
-                decodable = data?.decode(PhotoResults.self)
-            } else {
-                decodable = data?.decode(CollectionResults.self)
-            }
-            
-            completion(decodable?.photos)
-        }.resume()
+        self.session.dataTask(with: request, completionHandler: self.parseNextURLHeader(completion: { data, nextURL in
+            // FIXME: Extend DecodablePhoto
+            var decoded = data?.decode(PhotoType.self)
+            decoded?.nextURL = nextURL
+            completion(decoded)
+        })).resume()
+    }
+}
+
+extension String {
+    /// Parse comma delimited URLs (e.g., <https://api.unsplash.com/search/photos?page=1&query=dogs>; rel="first", <https://api.unsplash.com/search/photos?page=3&query=dogs>; rel="next")
+    func nextURL() -> URL? {
+        return self.components(separatedBy: ",")
+            .first(where: { $0.contains("rel=\"next\"") })?
+            .components(separatedBy: ";")
+            .compactMap { URL(string: $0.replacingOccurrences(of: "[<> ]", with: "", options: .regularExpression)) }
+            .first
     }
 }

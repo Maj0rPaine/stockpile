@@ -11,11 +11,13 @@ import Foundation
 protocol DecodablePhoto: Decodable {
     var total: Int? { get }
     var photos: [Photo]? { get }
+    var nextURL: URL? { get set }
 }
 
 struct PhotoResults: DecodablePhoto {
     let total: Int?
     let photos: [Photo]?
+    var nextURL: URL?
     
     enum RootKeys: String, CodingKey {
         case total
@@ -32,6 +34,7 @@ struct PhotoResults: DecodablePhoto {
 struct CollectionResults: DecodablePhoto {
     let total: Int?
     let photos: [Photo]?
+    var nextURL: URL?
     
     enum RootKeys: String, CodingKey {
         case total

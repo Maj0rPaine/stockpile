@@ -27,8 +27,8 @@ class CollectionsCollectionViewController: UICollectionViewController {
         
         collectionView.backgroundColor = .white
         collectionView.register(PhotoCell.self, forCellWithReuseIdentifier: PhotoCell.reuseIdentifier)
-        collectionViewDataSource = ImageCollectionViewDataSource(collectionView: collectionView, configure: { (cell, photo) in
-            cell.configure(with: photo)
+        collectionViewDataSource = ImageCollectionViewDataSource(collectionView: collectionView, configure: { [weak self] (cell, photo) in
+            cell.loadImage(photo: photo, imageProvider: self?.imageProvider)
         })
     }
     
@@ -56,7 +56,7 @@ class CollectionsCollectionViewController: UICollectionViewController {
 
 extension CollectionsCollectionViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.bounds.width - sectionInsets.left - sectionInsets.right, height: 100)
+        return CGSize(width: collectionView.bounds.width - sectionInsets.left - sectionInsets.right, height: collectionView.bounds.height / 4)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

@@ -33,7 +33,6 @@ class ImageCollectionViewDataSource<DataType: Any, CellType: UICollectionViewCel
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellType.reuseIdentifier, for: indexPath) as! CellType
-        cell.backgroundColor = .black
         
         if let item = data?[indexPath.row] {
             configure?(cell, item)

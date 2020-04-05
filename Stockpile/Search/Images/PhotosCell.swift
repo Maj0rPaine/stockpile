@@ -8,34 +8,41 @@
 
 import UIKit
 
-class PhotoCell: UICollectionViewCell, Cell {
-    lazy var label: UILabel = {
-        let label = UILabel()
-        label.textColor = .white
-        label.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(label)
+class PhotoCell: UICollectionViewCell, Cell {    
+    lazy var imageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(imageView)
         NSLayoutConstraint.activate([
-            label.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            label.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
+            imageView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+            imageView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+            imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
-        return label
+        return imageView
     }()
-        
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    let placeholderImage = UIImage(systemName: "photo")
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        imageView.image = placeholderImage
     }
+}
 
-    func configure(with photo: Photo) {
-        if let description = photo.description {
-            label.text = description
+extension PhotoCell {
+    func loadImage(photo: Photo, imageProvider: ImageProvider?) {
+        imageView.image = placeholderImage
+
+        guard let stringURL = photo.urls?.regular,
+            let url = URL(string: stringURL) else { return }
+        
+        imageProvider?.getImage(url: url) { [weak self] (image) in
+            DispatchQueue.main.async {
+                self?.imageView.image = image                
+            }
         }
     }
 }

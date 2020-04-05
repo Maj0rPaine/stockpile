@@ -7,10 +7,12 @@
 //
 
 import Foundation
+import UIKit.UIImage
 
 protocol ImageProvider {
     func fetch<PhotoType: DecodablePhoto>(resource: Resource, completion: @escaping (PhotoType?) -> Void)
     func nextPage<PhotoType: DecodablePhoto>(nextURL: URL?, completion: @escaping (PhotoType?) -> Void)
+    func getImage(url: URL, completion: @escaping (UIImage?) -> Void)
 }
 
 class Networking {
@@ -65,6 +67,31 @@ extension Networking: ImageProvider {
             completion(decoded)
         })).resume()
     }
+    
+    func getImage(url: URL, completion: @escaping (UIImage?) -> Void) {
+        if let cachedImage = UIImage.imageCache.object(forKey: url.absoluteString as AnyObject) as? UIImage {
+            print("Cached Image url: ", url.absoluteString)
+            completion(cachedImage)
+            return
+        }
+        
+        print("Image url: ", url.absoluteString)
+
+        // TODO: Keep track of these tasks
+        self.session.dataTask(with: url) { data, response, error in
+            guard let data = data else {
+                completion(nil)
+                return
+            }
+            
+            if let image = UIImage(data: data) {
+                completion(image)
+                image.cache(with: url.absoluteString)
+            } else {
+                completion(nil)
+            }
+        }.resume()
+    }
 }
 
 extension String {
@@ -75,5 +102,13 @@ extension String {
             .components(separatedBy: ";")
             .compactMap { URL(string: $0.replacingOccurrences(of: "[<> ]", with: "", options: .regularExpression)) }
             .first
+    }
+}
+
+extension UIImage {
+    static let imageCache = NSCache<AnyObject, AnyObject>()
+    
+    func cache(with key: String) {
+        UIImage.imageCache.setObject(self, forKey: key as AnyObject)
     }
 }

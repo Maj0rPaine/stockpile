@@ -8,10 +8,6 @@
 
 import UIKit
 
-class SuggestionCell: UITableViewCell {
-    static let identifier: String = "\(SuggestionCell.self)"
-}
-
 class SuggestionTableViewController: UITableViewController {
     var data: [Int] = Array(0..<10)
     

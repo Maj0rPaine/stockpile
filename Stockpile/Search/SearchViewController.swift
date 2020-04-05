@@ -18,11 +18,13 @@ class SearchViewController: UIViewController {
         resultsViewController = SearchResultsViewController()
         
         searchController = UISearchController(searchResultsController: resultsViewController)
-        searchController.searchBar.placeholder = "Search Images"
+        searchController.searchBar.placeholder = NSLocalizedString("Search Images", comment: "")
         searchController.searchBar.isTranslucent = false
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.delegate = self
         searchController.searchResultsUpdater = resultsViewController
+        searchController.searchBar.scopeButtonTitles = SearchScope.buttonTitles
+        
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
         definesPresentationContext = true
@@ -39,8 +41,11 @@ extension SearchViewController: UISearchBarDelegate {
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let searchText = searchBar.text else { return }
-        
-        // TODO: Query images with searchText
+        resultsViewController.performSearch(searchController: searchController)
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+        resultsViewController.selectedScope = SearchScope(rawValue: selectedScope) ?? .photos
+        resultsViewController.performSearch(searchController: searchController)
     }
 }

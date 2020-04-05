@@ -19,16 +19,21 @@ class StockpileTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    func testDecodeJSONAsPhotosResults() {
+        if let url = Bundle(for: StockpileTests.self).url(forResource: "Photos", withExtension: "json"),
+            let data = try? Data(contentsOf: url) {
+            XCTAssertNoThrow(try JSONDecoder().decode(PhotoResults.self, from: data))
+        } else {
+            XCTFail()
         }
     }
-
+    
+    func testDecodeJSONAsCollectionResults() {
+        if let url = Bundle(for: StockpileTests.self).url(forResource: "Collections", withExtension: "json"),
+            let data = try? Data(contentsOf: url) {
+            XCTAssertNoThrow(try JSONDecoder().decode(CollectionResults.self, from: data))
+        } else {
+            XCTFail()
+        }
+    }
 }

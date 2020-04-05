@@ -8,25 +8,13 @@
 
 import UIKit
 
-class ImageCell: UICollectionViewCell {
-    static let identifier: String = "\(ImageCell.self)"
-        
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
-    }
-}
-
 class ImageCollectionViewController: UICollectionViewController {
-    var data: [Int] = Array(0..<10)
-    
+    var photos: [Photo] = [] {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
+        
     let sectionInsets = UIEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 10.0)
     
     convenience init() {
@@ -48,13 +36,19 @@ class ImageCollectionViewController: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return data.count
+        return photos.count
     }
     
     override func collectionView(_ collectionView: UICollectionView,
                                  cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCell.identifier, for: indexPath) as! ImageCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCell.identifier, for: indexPath)
+        
         cell.backgroundColor = .black
+        
+        if let cell = cell as? ImageCell {
+            cell.configure(with: photos[indexPath.row])
+        }
+        
         return cell
     }
     

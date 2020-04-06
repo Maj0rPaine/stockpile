@@ -30,6 +30,14 @@ class ImageDetailViewController: UIViewController {
         return imageView
     }()
     
+    lazy var favoritesButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(systemName: "heart"), for: .normal)
+        button.setImage(UIImage(systemName: "heart.fill"), for: .selected)
+        button.addTarget(self, action: #selector(updateFavorite), for: .touchUpInside)
+        return button
+    }()
+    
     convenience init(photo: Photo) {
         self.init(nibName: nil, bundle: nil)
         self.photo = photo
@@ -53,10 +61,12 @@ class ImageDetailViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "square.and.arrow.up"), style: .done, target: self, action: #selector(sharePhoto(_:)))
+        
         toolbarItems = [
             UIBarButtonItem(image: UIImage(systemName: "info.circle"), style: .done, target: self, action: #selector(showInfo)),
             UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
-            UIBarButtonItem(image: UIImage(systemName: "square.and.arrow.up"), style: .done, target: self, action: #selector(sharePhoto(_:)))
+            UIBarButtonItem(customView: favoritesButton)
         ]
         
         navigationController?.setToolbarHidden(false, animated: true)
@@ -76,6 +86,10 @@ class ImageDetailViewController: UIViewController {
     @objc func showInfo() {
         let controller = UINavigationController(rootViewController: ImageInfoViewController(photo: photo))
         present(controller, animated: true, completion: nil)
+    }
+    
+    @objc func updateFavorite() {
+        
     }
 }
 

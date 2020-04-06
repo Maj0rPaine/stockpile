@@ -24,6 +24,10 @@
 		3F40B989243ACE3A00FD4348 /* ImageInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F40B988243ACE3A00FD4348 /* ImageInfoViewController.swift */; };
 		3F40B98B243ACE6300FD4348 /* String+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F40B98A243ACE6300FD4348 /* String+Date.swift */; };
 		3F40B98D243ACED000FD4348 /* UIStackView+Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F40B98C243ACED000FD4348 /* UIStackView+Label.swift */; };
+		3F40B98F243AD2C200FD4348 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F40B98E243AD2C200FD4348 /* DataController.swift */; };
+		3F40B991243ADF4B00FD4348 /* NSManageObjectContext+Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F40B990243ADF4B00FD4348 /* NSManageObjectContext+Entity.swift */; };
+		3F40B993243ADFF200FD4348 /* UIImage+Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F40B992243ADFF200FD4348 /* UIImage+Cache.swift */; };
+		3F40B995243AE01300FD4348 /* String+URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F40B994243AE01300FD4348 /* String+URL.swift */; };
 		3F5D0D862438BB00007DB703 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5D0D852438BB00007DB703 /* Networking.swift */; };
 		3F5D0D8A2438F84C007DB703 /* SuggestionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5D0D892438F84C007DB703 /* SuggestionTableViewController.swift */; };
 		3F5D0D8C2438FCD7007DB703 /* UIViewController+ChildController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5D0D8B2438FCD7007DB703 /* UIViewController+ChildController.swift */; };
@@ -69,6 +73,10 @@
 		3F40B988243ACE3A00FD4348 /* ImageInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageInfoViewController.swift; sourceTree = "<group>"; };
 		3F40B98A243ACE6300FD4348 /* String+Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Date.swift"; sourceTree = "<group>"; };
 		3F40B98C243ACED000FD4348 /* UIStackView+Label.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Label.swift"; sourceTree = "<group>"; };
+		3F40B98E243AD2C200FD4348 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
+		3F40B990243ADF4B00FD4348 /* NSManageObjectContext+Entity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManageObjectContext+Entity.swift"; sourceTree = "<group>"; };
+		3F40B992243ADFF200FD4348 /* UIImage+Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Cache.swift"; sourceTree = "<group>"; };
+		3F40B994243AE01300FD4348 /* String+URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+URL.swift"; sourceTree = "<group>"; };
 		3F5D0D852438BB00007DB703 /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
 		3F5D0D892438F84C007DB703 /* SuggestionTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionTableViewController.swift; sourceTree = "<group>"; };
 		3F5D0D8B2438FCD7007DB703 /* UIViewController+ChildController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+ChildController.swift"; sourceTree = "<group>"; };
@@ -125,6 +133,7 @@
 				3F40B944243A149000FD4348 /* UI */,
 				3F5D0D922439101C007DB703 /* Models */,
 				3F5D0D842438BAC1007DB703 /* Networking */,
+				3F40B987243ACE1A00FD4348 /* Info */,
 				3F3BC05D2438B82200C9A9F0 /* Search */,
 				3F3BC0372438AB1D00C9A9F0 /* AppDelegate.swift */,
 				3F3BC0392438AB1D00C9A9F0 /* SceneDelegate.swift */,
@@ -174,7 +183,6 @@
 				3F40B94B243A154300FD4348 /* PhotosCollectionViewController.swift */,
 				3F5D0D9B24396093007DB703 /* PhotosCell.swift */,
 				3F40B94E243A15C000FD4348 /* CollectionsCollectionViewController.swift */,
-				3F40B987243ACE1A00FD4348 /* Info */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -183,6 +191,8 @@
 			isa = PBXGroup;
 			children = (
 				3F40B982243A7AF100FD4348 /* Stockpile.xcdatamodeld */,
+				3F40B98E243AD2C200FD4348 /* DataController.swift */,
+				3F40B990243ADF4B00FD4348 /* NSManageObjectContext+Entity.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -204,6 +214,8 @@
 				3F5D0D852438BB00007DB703 /* Networking.swift */,
 				3F5D0D8D2439002C007DB703 /* Resource.swift */,
 				3F5D0D9524391613007DB703 /* Data+Decodable.swift */,
+				3F40B992243ADFF200FD4348 /* UIImage+Cache.swift */,
+				3F40B994243AE01300FD4348 /* String+URL.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -331,11 +343,13 @@
 			files = (
 				3F5D0D8E2439002C007DB703 /* Resource.swift in Sources */,
 				3F5D0D9C24396093007DB703 /* PhotosCell.swift in Sources */,
+				3F40B995243AE01300FD4348 /* String+URL.swift in Sources */,
 				3F5D0D9E243960AE007DB703 /* SuggestionTableViewCell.swift in Sources */,
 				3F3BC03C2438AB1D00C9A9F0 /* SearchViewController.swift in Sources */,
 				3F5D0D862438BB00007DB703 /* Networking.swift in Sources */,
 				3F5D0D9824392C05007DB703 /* SearchScope.swift in Sources */,
 				3F40B989243ACE3A00FD4348 /* ImageInfoViewController.swift in Sources */,
+				3F40B991243ADF4B00FD4348 /* NSManageObjectContext+Entity.swift in Sources */,
 				3F40B98B243ACE6300FD4348 /* String+Date.swift in Sources */,
 				3F5D0D9424391029007DB703 /* Photo.swift in Sources */,
 				3F40B94C243A154300FD4348 /* PhotosCollectionViewController.swift in Sources */,
@@ -347,8 +361,10 @@
 				3F40B948243A14D300FD4348 /* CollectionViewCell.swift in Sources */,
 				3F40B946243A14B700FD4348 /* CollectionViewDataSource.swift in Sources */,
 				3F5D0D9624391613007DB703 /* Data+Decodable.swift in Sources */,
+				3F40B993243ADFF200FD4348 /* UIImage+Cache.swift in Sources */,
 				3F3BC0382438AB1D00C9A9F0 /* AppDelegate.swift in Sources */,
 				3F3BC03A2438AB1D00C9A9F0 /* SceneDelegate.swift in Sources */,
+				3F40B98F243AD2C200FD4348 /* DataController.swift in Sources */,
 				3F40B986243A7F2300FD4348 /* ImageDetailViewController.swift in Sources */,
 				3F5D0D8C2438FCD7007DB703 /* UIViewController+ChildController.swift in Sources */,
 			);

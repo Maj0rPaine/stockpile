@@ -21,7 +21,7 @@ extension UIStackView {
         
         let stackView = UIStackView(arrangedSubviews: [titleLabel, detailLabel])
         stackView.axis = .vertical
-        stackView.distribution = .fillProportionally
+        stackView.distribution = .fill
         stackView.spacing = 5
         return stackView
     }

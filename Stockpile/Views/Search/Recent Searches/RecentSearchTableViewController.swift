@@ -63,7 +63,8 @@ class RecentSearchTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return NSLocalizedString("Recent Searches", comment: "")
+        guard let sectionInfo = fetchedResultsController.sections?.first else { return "" }
+        return sectionInfo.numberOfObjects > 0 ? NSLocalizedString("Recent Searches", comment: "") : ""
     }
 }
 

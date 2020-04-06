@@ -21,6 +21,7 @@ class FavoritesViewController: UIViewController, UICollectionViewDelegate {
         collectionView.register(ImageCell.self, forCellWithReuseIdentifier: ImageCell.reuseIdentifier)
         collectionView.delegate = self
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.backgroundColor = .systemBackground
         view.addSubview(collectionView)
         NSLayoutConstraint.activate([
             collectionView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
@@ -33,7 +34,7 @@ class FavoritesViewController: UIViewController, UICollectionViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
         NotificationCenter.default.addObserver(self, selector: #selector(observeChanges(_:)), name: .NSManagedObjectContextObjectsDidChange, object: nil)
         
         collectionViewDataSource = ImageCollectionViewDataSource(collectionView: collectionView, configure: { (cell, favorite) in

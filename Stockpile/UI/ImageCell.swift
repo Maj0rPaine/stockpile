@@ -43,13 +43,13 @@ class ImageCell: UICollectionViewCell, Cell {
 }
 
 extension ImageCell {
-    func loadImage(photo: Photo, imageProvider: ImageProvider?) {
+    func loadImage(photo: Photo, searchProvider: SearchProvider?) {
         imageView.image = placeholderImage
 
         guard let stringURL = photo.urls?.regular,
             let url = URL(string: stringURL) else { return }
         
-        imageProvider?.getImage(url: url) { [weak self] (image) in
+        searchProvider?.getImage(url: url) { [weak self] (image) in
             DispatchQueue.main.async {
                 self?.imageView.image = image                
             }

@@ -8,18 +8,12 @@
 
 import UIKit
 
-class SuggestionPresenter: NSObject, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
-    }
-}
-
 class SearchViewController: UIViewController {
     @IBOutlet var tableView: UITableView!
+
+    let searchProvider: SearchProvider = Networking()
+
+    var trendsDataSource: TrendsDataSource!
     
     var resultsViewController = SearchResultsViewController()
     
@@ -29,7 +23,7 @@ class SearchViewController: UIViewController {
         searchController.searchBar.isTranslucent = false
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.delegate = self
-        //searchController.searchResultsUpdater = resultsViewController
+        searchController.searchResultsUpdater = resultsViewController
         searchController.searchBar.scopeButtonTitles = SearchScope.buttonTitles
         return searchController
     }()
@@ -43,15 +37,20 @@ class SearchViewController: UIViewController {
         
         tableView.delegate = self
         resultsViewController.recentSearchTableViewController.tableView.delegate = self
+        trendsDataSource = TrendsDataSource(tableView: tableView, searchProvider: searchProvider)
     }
 }
 
 extension SearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView == self.tableView {
-            print("Selected trend")
+            if let searchText = trendsDataSource.trends[indexPath.row].keyword {
+                searchController.isActive = true
+                initiateSearch(searchText: searchText)
+            }
         } else {
             if let searchText = resultsViewController.recentSearchTableViewController.fetchedResultsController.object(at: indexPath).searchText {
+                searchController.searchBar.resignFirstResponder()
                 initiateSearch(searchText: searchText)
             }
         }
@@ -60,14 +59,9 @@ extension SearchViewController: UITableViewDelegate {
 
 extension SearchViewController: UISearchBarDelegate {
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        print("Did begin editing")
         DispatchQueue.main.async {
             self.searchController.searchResultsController?.view.isHidden = false
         }
-    }
-    
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        resultsViewController.updateViewController(searchText: searchText)
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -83,8 +77,7 @@ extension SearchViewController: UISearchBarDelegate {
     }
     
     func initiateSearch(searchText: String) {
-        resultsViewController.updateViewController(searchText: searchText)
+        searchController.searchBar.text = searchText
         resultsViewController.performSearch(searchText: searchText)
-        searchController.searchBar.resignFirstResponder()
     }
 }

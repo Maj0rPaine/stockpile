@@ -10,7 +10,7 @@ import UIKit
 import LinkPresentation
 
 class ImageDetailViewController: UIViewController {
-    let imageProvider: ImageProvider = Networking()
+    let searchProvider: SearchProvider = Networking()
     
     let dataController = DataController.shared
     
@@ -42,7 +42,7 @@ class ImageDetailViewController: UIViewController {
         return button
     }()
     
-    let infoButton = UIBarButtonItem(image: UIImage(systemName: "info.circle"), style: .done, target: self, action: #selector(showInfo))
+    var infoButton: UIBarButtonItem!
     
     convenience init(photo: Photo) {
         self.init(nibName: nil, bundle: nil)
@@ -69,13 +69,15 @@ class ImageDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "square.and.arrow.up"), style: .done, target: self, action: #selector(sharePhoto(_:)))
+        
+        infoButton = UIBarButtonItem(image: UIImage(systemName: "info.circle"), style: .done, target: self, action: #selector(showInfo))
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "square.and.arrow.up"), style: .done, target: self, action: #selector(sharePhoto(_:)))
-        
+                        
         toolbarItems = [
             infoButton,
             UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
@@ -96,7 +98,7 @@ class ImageDetailViewController: UIViewController {
         guard let stringURL = photo?.urls?.regular,
             let url = URL(string: stringURL) else { return }
         
-        imageProvider.getImage(url: url) { [weak self] (image) in
+        searchProvider.getImage(url: url) { [weak self] (image) in
             DispatchQueue.main.async {
                 self?.imageView.image = image
             }

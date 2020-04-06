@@ -35,7 +35,7 @@ class ImageInfoViewController: UIViewController {
     func buildStackView() {
         let stackView = UIStackView()
         stackView.axis = .vertical
-        stackView.distribution = .fillEqually
+        //stackView.distribution = .fillEqually
         stackView.spacing = 15
         stackView.addArrangedSubview(UIStackView.titleDetail(title: "ID", detail: photo?.id))
         stackView.addArrangedSubview(UIStackView.titleDetail(title: "Created", detail: photo?.created_at?.fullDate()))

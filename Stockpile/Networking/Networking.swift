@@ -9,10 +9,11 @@
 import Foundation
 import UIKit.UIImage
 
-protocol ImageProvider {
+protocol SearchProvider {
     func fetch<PhotoType: DecodablePhoto>(resource: Resource, completion: @escaping (PhotoType?) -> Void)
     func nextPage<PhotoType: DecodablePhoto>(nextURL: URL?, completion: @escaping (PhotoType?) -> Void)
     func getImage(url: URL, completion: @escaping (UIImage?) -> Void)
+    func getTrends(completion: @escaping ([Trend]?) -> Void)
 }
 
 class Networking {
@@ -38,7 +39,7 @@ class Networking {
     }
 }
 
-extension Networking: ImageProvider {
+extension Networking: SearchProvider {
     func fetch<PhotoType: DecodablePhoto>(resource: Resource, completion: @escaping (PhotoType?) -> Void) {
         guard let request = resource.request() else {
             completion(nil)
@@ -89,6 +90,18 @@ extension Networking: ImageProvider {
             } else {
                 completion(nil)
             }
+        }.resume()
+    }
+    
+    func getTrends(completion: @escaping ([Trend]?) -> Void) {
+        guard let request = Resource.searchTrends().request() else {
+            completion(nil)
+            return
+        }
+        
+        self.session.dataTask(with: request) { (data, _, _) in
+            let trends = data?.decode([Trend].self)
+            completion(trends)
         }.resume()
     }
 }

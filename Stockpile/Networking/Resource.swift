@@ -42,18 +42,29 @@ extension Resource {
             ])
     }
     
+    static func searchTrends() -> Resource {
+        let path = "/search_terms"
+        return Resource(path: path)
+    }
+    
     func request() -> URLRequest? {
         return URLRequest.authorized(url: self.url)
     }
 }
 
 extension URLRequest {
+    static let apiKey = ""
+
     static func authorized(url: URL?) -> URLRequest? {
         guard let url = url else { return nil }
+    
+        guard !apiKey.isEmpty else {
+            preconditionFailure("Failed to add API key")
+        }
 
         var request = URLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10.0)
         request.addValue("v1", forHTTPHeaderField: "Accept-Version")
-        request.addValue("Client-ID r8RfyeA8XqFuT6u0DuZ7aIrxByzSbHOxvtJUCd-5wZ4", forHTTPHeaderField: "Authorization")
+        request.addValue("Client-ID \(apiKey)", forHTTPHeaderField: "Authorization")
         
         print("Request: ", request.url?.absoluteString ?? "None")
 

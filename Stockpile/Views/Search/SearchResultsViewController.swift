@@ -13,7 +13,7 @@ protocol SearchResultsDelegate: class {
 }
 
 class SearchResultsViewController: UIViewController {
-    let imageProvider: ImageProvider = Networking()
+    let searchProvider: SearchProvider = Networking()
     
     let dataController = DataController.shared
 
@@ -49,8 +49,8 @@ class SearchResultsViewController: UIViewController {
     
     func initializeViewControllers() {
         recentSearchTableViewController = RecentSearchTableViewController()
-        photosCollectionViewController = PhotosCollectionViewController(imageProvider: imageProvider, delegate: self)
-        collectionsCollectionViewController = CollectionsCollectionViewController(imageProvider: imageProvider, delegate: self)
+        photosCollectionViewController = PhotosCollectionViewController(searchProvider: searchProvider, delegate: self)
+        collectionsCollectionViewController = CollectionsCollectionViewController(searchProvider: searchProvider, delegate: self)
     }
     
     func setViewController(_ controller: UIViewController) {
@@ -64,18 +64,13 @@ class SearchResultsViewController: UIViewController {
 
 extension SearchResultsViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
+        if !searchController.isActive {
+            return
+        }
+        
         print("Update search results")
-        updateViewController(searchText: searchController.searchBar.text)
-    }
-
-    func setScope(scope: Int, searchText: String?) {
-        self.selectedScope = SearchScope(rawValue: scope) ?? .photos
-        updateViewController(searchText: searchText)
-        performSearch(searchText: searchText)
-    }
-    
-    func updateViewController(searchText: String?) {
-        if let searchText = searchText, !searchText.isEmpty {
+        
+        if let searchText = searchController.searchBar.text, !searchText.isEmpty {
             if selectedScope == .photos {
                 setViewController(photosCollectionViewController)
             } else {
@@ -85,17 +80,20 @@ extension SearchResultsViewController: UISearchResultsUpdating {
             setViewController(recentSearchTableViewController)
         }
     }
+
+    func setScope(scope: Int, searchText: String?) {
+        self.selectedScope = SearchScope(rawValue: scope) ?? .photos
+        performSearch(searchText: searchText)
+    }
         
     func performSearch(searchText: String?) {
         if let searchText = searchText?.trimmingCharacters(in: .whitespacesAndNewlines), !searchText.isEmpty {
-            clearResults()
-            
             if selectedScope == .photos {
-                imageProvider.fetch(resource: .searchPhotos(query: searchText)) { [weak self] (results: PhotoResults?) in
+                searchProvider.fetch(resource: .searchPhotos(query: searchText)) { [weak self] (results: PhotoResults?) in
                     self?.photosCollectionViewController.photoResults = results
                 }
             } else {
-                imageProvider.fetch(resource: .searchCollections(query: searchText)) { [weak self] (results: CollectionResults?) in
+                searchProvider.fetch(resource: .searchCollections(query: searchText)) { [weak self] (results: CollectionResults?) in
                     self?.collectionsCollectionViewController.collectionResults = results
                 }
             }

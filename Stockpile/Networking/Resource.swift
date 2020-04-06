@@ -53,7 +53,7 @@ extension Resource {
 }
 
 extension URLRequest {
-    static let apiKey = ""
+    static let apiKey = "r8RfyeA8XqFuT6u0DuZ7aIrxByzSbHOxvtJUCd-5wZ4"
 
     static func authorized(url: URL?) -> URLRequest? {
         guard let url = url else { return nil }

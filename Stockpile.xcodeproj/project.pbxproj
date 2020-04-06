@@ -19,12 +19,17 @@
 		3F40B948243A14D300FD4348 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F40B947243A14D300FD4348 /* CollectionViewCell.swift */; };
 		3F40B94C243A154300FD4348 /* PhotosCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F40B94B243A154300FD4348 /* PhotosCollectionViewController.swift */; };
 		3F40B94F243A15C000FD4348 /* CollectionsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F40B94E243A15C000FD4348 /* CollectionsCollectionViewController.swift */; };
+		3F40B984243A7AF100FD4348 /* Stockpile.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3F40B982243A7AF100FD4348 /* Stockpile.xcdatamodeld */; };
+		3F40B986243A7F2300FD4348 /* ImageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F40B985243A7F2300FD4348 /* ImageDetailViewController.swift */; };
+		3F40B989243ACE3A00FD4348 /* ImageInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F40B988243ACE3A00FD4348 /* ImageInfoViewController.swift */; };
+		3F40B98B243ACE6300FD4348 /* String+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F40B98A243ACE6300FD4348 /* String+Date.swift */; };
+		3F40B98D243ACED000FD4348 /* UIStackView+Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F40B98C243ACED000FD4348 /* UIStackView+Label.swift */; };
 		3F5D0D862438BB00007DB703 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5D0D852438BB00007DB703 /* Networking.swift */; };
 		3F5D0D8A2438F84C007DB703 /* SuggestionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5D0D892438F84C007DB703 /* SuggestionTableViewController.swift */; };
 		3F5D0D8C2438FCD7007DB703 /* UIViewController+ChildController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5D0D8B2438FCD7007DB703 /* UIViewController+ChildController.swift */; };
 		3F5D0D8E2439002C007DB703 /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5D0D8D2439002C007DB703 /* Resource.swift */; };
 		3F5D0D9124390FEF007DB703 /* Photos.json in Resources */ = {isa = PBXBuildFile; fileRef = 3F5D0D9024390FEF007DB703 /* Photos.json */; };
-		3F5D0D9424391029007DB703 /* Photos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5D0D9324391029007DB703 /* Photos.swift */; };
+		3F5D0D9424391029007DB703 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5D0D9324391029007DB703 /* Photo.swift */; };
 		3F5D0D9624391613007DB703 /* Data+Decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5D0D9524391613007DB703 /* Data+Decodable.swift */; };
 		3F5D0D9824392C05007DB703 /* SearchScope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5D0D9724392C05007DB703 /* SearchScope.swift */; };
 		3F5D0D9A24393C24007DB703 /* Collections.json in Resources */ = {isa = PBXBuildFile; fileRef = 3F5D0D9924393C24007DB703 /* Collections.json */; };
@@ -59,12 +64,17 @@
 		3F40B947243A14D300FD4348 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		3F40B94B243A154300FD4348 /* PhotosCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotosCollectionViewController.swift; sourceTree = "<group>"; };
 		3F40B94E243A15C000FD4348 /* CollectionsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionsCollectionViewController.swift; sourceTree = "<group>"; };
+		3F40B983243A7AF100FD4348 /* Stockpile.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Stockpile.xcdatamodel; sourceTree = "<group>"; };
+		3F40B985243A7F2300FD4348 /* ImageDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailViewController.swift; sourceTree = "<group>"; };
+		3F40B988243ACE3A00FD4348 /* ImageInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageInfoViewController.swift; sourceTree = "<group>"; };
+		3F40B98A243ACE6300FD4348 /* String+Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Date.swift"; sourceTree = "<group>"; };
+		3F40B98C243ACED000FD4348 /* UIStackView+Label.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Label.swift"; sourceTree = "<group>"; };
 		3F5D0D852438BB00007DB703 /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
 		3F5D0D892438F84C007DB703 /* SuggestionTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionTableViewController.swift; sourceTree = "<group>"; };
 		3F5D0D8B2438FCD7007DB703 /* UIViewController+ChildController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+ChildController.swift"; sourceTree = "<group>"; };
 		3F5D0D8D2439002C007DB703 /* Resource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resource.swift; sourceTree = "<group>"; };
 		3F5D0D9024390FEF007DB703 /* Photos.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Photos.json; sourceTree = "<group>"; };
-		3F5D0D9324391029007DB703 /* Photos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photos.swift; sourceTree = "<group>"; };
+		3F5D0D9324391029007DB703 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		3F5D0D9524391613007DB703 /* Data+Decodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Decodable.swift"; sourceTree = "<group>"; };
 		3F5D0D9724392C05007DB703 /* SearchScope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchScope.swift; sourceTree = "<group>"; };
 		3F5D0D9924393C24007DB703 /* Collections.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Collections.json; sourceTree = "<group>"; };
@@ -111,6 +121,7 @@
 		3F3BC0362438AB1D00C9A9F0 /* Stockpile */ = {
 			isa = PBXGroup;
 			children = (
+				3F40B981243A7AD700FD4348 /* CoreData */,
 				3F40B944243A149000FD4348 /* UI */,
 				3F5D0D922439101C007DB703 /* Models */,
 				3F5D0D842438BAC1007DB703 /* Networking */,
@@ -163,8 +174,28 @@
 				3F40B94B243A154300FD4348 /* PhotosCollectionViewController.swift */,
 				3F5D0D9B24396093007DB703 /* PhotosCell.swift */,
 				3F40B94E243A15C000FD4348 /* CollectionsCollectionViewController.swift */,
+				3F40B987243ACE1A00FD4348 /* Info */,
 			);
 			path = Images;
+			sourceTree = "<group>";
+		};
+		3F40B981243A7AD700FD4348 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				3F40B982243A7AF100FD4348 /* Stockpile.xcdatamodeld */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		3F40B987243ACE1A00FD4348 /* Info */ = {
+			isa = PBXGroup;
+			children = (
+				3F40B985243A7F2300FD4348 /* ImageDetailViewController.swift */,
+				3F40B988243ACE3A00FD4348 /* ImageInfoViewController.swift */,
+				3F40B98A243ACE6300FD4348 /* String+Date.swift */,
+				3F40B98C243ACED000FD4348 /* UIStackView+Label.swift */,
+			);
+			path = Info;
 			sourceTree = "<group>";
 		};
 		3F5D0D842438BAC1007DB703 /* Networking */ = {
@@ -189,7 +220,7 @@
 		3F5D0D922439101C007DB703 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				3F5D0D9324391029007DB703 /* Photos.swift */,
+				3F5D0D9324391029007DB703 /* Photo.swift */,
 				3F5D0D9724392C05007DB703 /* SearchScope.swift */,
 			);
 			path = Models;
@@ -304,9 +335,13 @@
 				3F3BC03C2438AB1D00C9A9F0 /* SearchViewController.swift in Sources */,
 				3F5D0D862438BB00007DB703 /* Networking.swift in Sources */,
 				3F5D0D9824392C05007DB703 /* SearchScope.swift in Sources */,
-				3F5D0D9424391029007DB703 /* Photos.swift in Sources */,
+				3F40B989243ACE3A00FD4348 /* ImageInfoViewController.swift in Sources */,
+				3F40B98B243ACE6300FD4348 /* String+Date.swift in Sources */,
+				3F5D0D9424391029007DB703 /* Photo.swift in Sources */,
 				3F40B94C243A154300FD4348 /* PhotosCollectionViewController.swift in Sources */,
+				3F40B984243A7AF100FD4348 /* Stockpile.xcdatamodeld in Sources */,
 				3F5D0D8A2438F84C007DB703 /* SuggestionTableViewController.swift in Sources */,
+				3F40B98D243ACED000FD4348 /* UIStackView+Label.swift in Sources */,
 				3F3BC05C2438B81800C9A9F0 /* SearchResultsViewController.swift in Sources */,
 				3F40B94F243A15C000FD4348 /* CollectionsCollectionViewController.swift in Sources */,
 				3F40B948243A14D300FD4348 /* CollectionViewCell.swift in Sources */,
@@ -314,6 +349,7 @@
 				3F5D0D9624391613007DB703 /* Data+Decodable.swift in Sources */,
 				3F3BC0382438AB1D00C9A9F0 /* AppDelegate.swift in Sources */,
 				3F3BC03A2438AB1D00C9A9F0 /* SceneDelegate.swift in Sources */,
+				3F40B986243A7F2300FD4348 /* ImageDetailViewController.swift in Sources */,
 				3F5D0D8C2438FCD7007DB703 /* UIViewController+ChildController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -475,6 +511,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Stockpile/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -492,6 +529,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Stockpile/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -577,6 +615,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		3F40B982243A7AF100FD4348 /* Stockpile.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				3F40B983243A7AF100FD4348 /* Stockpile.xcdatamodel */,
+			);
+			currentVersion = 3F40B983243A7AF100FD4348 /* Stockpile.xcdatamodel */;
+			path = Stockpile.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 3F3BC02C2438AB1D00C9A9F0 /* Project object */;
 }

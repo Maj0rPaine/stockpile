@@ -44,9 +44,10 @@ class ImageCollectionViewDataSource<DataType: Any, CellType: UICollectionViewCel
     func updateData(newData: [DataType]?) {
         if self.data != nil, let newData = newData {
             DispatchQueue.main.async {
-                let paths = Array(0..<newData.count).map { IndexPath(row: $0 + (self.data?.count ?? 0), section: 0)}
+                //let paths = Array(0..<newData.count).map { IndexPath(row: $0 + (self.data?.count ?? 0), section: 0)}
                 self.data?.append(contentsOf: newData)
-                self.collectionView?.insertItems(at: paths)
+                //self.collectionView?.insertItems(at: paths)
+                self.collectionView.reloadData()
             }
         } else {
             DispatchQueue.main.async {

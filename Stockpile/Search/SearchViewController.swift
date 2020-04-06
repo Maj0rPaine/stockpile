@@ -46,7 +46,6 @@ extension SearchViewController: UISearchBarDelegate {
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         resultsViewController.clearResults()
-        resultsViewController.resetResultsViewController()
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {

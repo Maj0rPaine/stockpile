@@ -11,6 +11,8 @@ import UIKit
 class PhotosCollectionViewController: UICollectionViewController {
     var imageProvider: ImageProvider!
     
+    weak var delegate: ResultsDelegate?
+    
     var photoResults: PhotoResults? {
         didSet {
             self.collectionViewDataSource.updateData(newData: photoResults?.photos)
@@ -21,11 +23,11 @@ class PhotosCollectionViewController: UICollectionViewController {
             
     let sectionInsets = UIEdgeInsets.zero
 
-    convenience init(imageProvider: ImageProvider) {
+    convenience init(imageProvider: ImageProvider, delegate: ResultsDelegate) {
         self.init(collectionViewLayout: UICollectionViewFlowLayout())
         self.imageProvider = imageProvider
+        self.delegate = delegate
         
-        collectionView.backgroundColor = .white
         collectionView.register(PhotoCell.self, forCellWithReuseIdentifier: PhotoCell.reuseIdentifier)
         collectionViewDataSource = ImageCollectionViewDataSource(collectionView: collectionView, configure: { [weak self] (cell, photo) in
             cell.loadImage(photo: photo, imageProvider: self?.imageProvider)
@@ -41,7 +43,8 @@ class PhotosCollectionViewController: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // TODO: Present details
+        guard let data = collectionViewDataSource.data else { return }
+        delegate?.didSelect(photo: data[indexPath.row])
     }
     
     override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {

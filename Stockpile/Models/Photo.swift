@@ -64,11 +64,20 @@ struct CollectionResults: DecodablePhoto {
 
 struct Photo: Decodable {
     let id: String?
+    let created_at: String?
     let width: Int?
     let height: Int?
     let color: String?
     let description: String?
     let urls: Urls?
+    let links: Links?
+}
+
+extension Photo {
+    var dimension: String {
+        guard let width = width, let height = height else { return "" }
+        return "\(width)x\(height)"
+    }
 }
 
 struct Urls: Decodable {
@@ -77,4 +86,8 @@ struct Urls: Decodable {
     let regular: String?
     let small: String?
     let thumb: String?
+}
+
+struct Links: Decodable {
+    let html: String?
 }

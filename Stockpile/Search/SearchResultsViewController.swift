@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol ResultsDelegate: class {
+    func didSelect(photo: Photo)
+}
+
 class SearchResultsViewController: UIViewController {
     let imageProvider: ImageProvider = Networking()
 
@@ -28,8 +32,8 @@ class SearchResultsViewController: UIViewController {
     
     func initializeViewControllers() {
         suggestionTableViewController = SuggestionTableViewController()
-        photosCollectionViewController = PhotosCollectionViewController(imageProvider: imageProvider)
-        collectionsCollectionViewController = CollectionsCollectionViewController(imageProvider: imageProvider)
+        photosCollectionViewController = PhotosCollectionViewController(imageProvider: imageProvider, delegate: self)
+        collectionsCollectionViewController = CollectionsCollectionViewController(imageProvider: imageProvider, delegate: self)
     }
     
     func setViewController(_ controller: UIViewController) {
@@ -90,5 +94,12 @@ extension SearchResultsViewController: UISearchResultsUpdating {
     
     func resetResultsViewController() {
         setViewController(suggestionTableViewController)
+    }
+}
+
+extension SearchResultsViewController: ResultsDelegate {
+    func didSelect(photo: Photo) {
+        let controller = UINavigationController(rootViewController: ImageDetailViewController(photo: photo))
+        present(controller, animated: true, completion: nil)
     }
 }

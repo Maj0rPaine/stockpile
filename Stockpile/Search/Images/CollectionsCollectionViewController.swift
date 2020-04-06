@@ -11,7 +11,7 @@ import UIKit
 class CollectionsCollectionViewController: UICollectionViewController {
     var imageProvider: ImageProvider!
     
-    weak var delegate: ResultsDelegate?
+    weak var delegate: SearchResultsDelegate?
     
     var collectionResults: CollectionResults? {
         didSet {
@@ -23,7 +23,7 @@ class CollectionsCollectionViewController: UICollectionViewController {
             
     let sectionInsets = UIEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 10.0)
     
-    convenience init(imageProvider: ImageProvider, delegate: ResultsDelegate) {
+    convenience init(imageProvider: ImageProvider, delegate: SearchResultsDelegate) {
         self.init(collectionViewLayout: UICollectionViewFlowLayout())
         self.imageProvider = imageProvider
         self.delegate = delegate
@@ -44,7 +44,7 @@ class CollectionsCollectionViewController: UICollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let data = collectionViewDataSource.data else { return }
-        delegate?.didSelect(photo: data[indexPath.row])
+        delegate?.didSelectPhoto(photo: data[indexPath.row])
     }
     
     override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {

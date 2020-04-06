@@ -33,4 +33,30 @@ extension NSManagedObjectContext {
         guard let results = try? fetch(imageFetch) else { return nil }
         return results.first
     }
+    
+    func fetchSearches() -> [Search]? {
+        guard let objects = try? fetch(Search.fetchRequest()) as? [Search] else { return nil }
+        return objects
+    }
+    
+    func fetchSearch(_ searchText: String) -> Search? {
+        let imageFetch: NSFetchRequest<Search> = Search.fetchRequest()
+        imageFetch.predicate = NSPredicate(format: "%K == %@", #keyPath(Search.searchText), searchText)
+        
+        guard let results = try? fetch(imageFetch) else { return nil }
+        return results.first
+    }
+    
+    func deleteSearches() {
+        do {
+            let fetchRequest: NSFetchRequest<NSFetchRequestResult> = Search.fetchRequest()
+            let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+            deleteRequest.resultType = .resultTypeObjectIDs
+            let result = try execute(deleteRequest) as? NSBatchDeleteResult
+            let changes: [AnyHashable: Any] = [NSDeletedObjectsKey: result?.result as? [NSManagedObjectID] ?? []]
+            NSManagedObjectContext.mergeChanges(fromRemoteContextSave: changes, into: [self])
+        } catch let error {
+            print("Batch Delete Error: \(error)")
+        }
+    }
 }

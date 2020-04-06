@@ -8,6 +8,6 @@
 
 import UIKit
 
-class SuggestionCell: UITableViewCell {
-    static let identifier: String = "\(SuggestionCell.self)"
+class RecentSearchCell: UITableViewCell {
+    static let identifier: String = "\(RecentSearchCell.self)"
 }

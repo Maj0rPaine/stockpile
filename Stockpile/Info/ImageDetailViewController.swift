@@ -10,11 +10,15 @@ import UIKit
 import LinkPresentation
 
 class ImageDetailViewController: UIViewController {
-    var photo: Photo!
-    
     let imageProvider: ImageProvider = Networking()
     
+    let dataController = DataController.shared
+    
     var metadata: LPLinkMetadata?
+    
+    var photo: Photo?
+
+    var favorite: Favorite?
     
     lazy var imageView: UIImageView = {
         let imageView = UIImageView(image: UIImage(systemName: "photo"))
@@ -31,16 +35,27 @@ class ImageDetailViewController: UIViewController {
     }()
     
     lazy var favoritesButton: UIButton = {
-        let button = UIButton(type: .system)
+        let button = UIButton()
         button.setImage(UIImage(systemName: "heart"), for: .normal)
         button.setImage(UIImage(systemName: "heart.fill"), for: .selected)
-        button.addTarget(self, action: #selector(updateFavorite), for: .touchUpInside)
+        button.addTarget(self, action: #selector(saveDeleteFavorite(_:)), for: .touchUpInside)
         return button
     }()
+    
+    let infoButton = UIBarButtonItem(image: UIImage(systemName: "info.circle"), style: .done, target: self, action: #selector(showInfo))
     
     convenience init(photo: Photo) {
         self.init(nibName: nil, bundle: nil)
         self.photo = photo
+        fetchMetaData()
+        loadImage()
+    }
+    
+    convenience init(favorite: Favorite) {
+        self.init(nibName: nil, bundle: nil)
+        self.favorite = favorite
+        loadFavorite(favorite: favorite)
+        infoButton.isEnabled = false
     }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -54,8 +69,6 @@ class ImageDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        fetchMetaData()
-        loadImage()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -64,7 +77,7 @@ class ImageDetailViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "square.and.arrow.up"), style: .done, target: self, action: #selector(sharePhoto(_:)))
         
         toolbarItems = [
-            UIBarButtonItem(image: UIImage(systemName: "info.circle"), style: .done, target: self, action: #selector(showInfo)),
+            infoButton,
             UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
             UIBarButtonItem(customView: favoritesButton)
         ]
@@ -73,7 +86,14 @@ class ImageDetailViewController: UIViewController {
     }
     
     func loadImage() {
-        guard let stringURL = photo.urls?.regular,
+        // Check if already saved
+        if let id = photo?.id,
+            let savedImage = dataController.viewContext.fetchFavorite(id) {
+            loadFavorite(favorite: savedImage)
+            return
+        }
+        
+        guard let stringURL = photo?.urls?.regular,
             let url = URL(string: stringURL) else { return }
         
         imageProvider.getImage(url: url) { [weak self] (image) in
@@ -83,13 +103,42 @@ class ImageDetailViewController: UIViewController {
         }
     }
     
+    func loadFavorite(favorite: Favorite) {
+        if let data = favorite.data {
+            favoritesButton.isSelected = true
+            imageView.image = UIImage(data: data)
+            self.favorite = favorite
+        }
+    }
+    
     @objc func showInfo() {
+        guard let photo = photo else { return }
         let controller = UINavigationController(rootViewController: ImageInfoViewController(photo: photo))
         present(controller, animated: true, completion: nil)
     }
     
-    @objc func updateFavorite() {
+    @objc func saveDeleteFavorite(_ sender: UIButton) {
+        if favorite != nil {
+            deleteFavorite()
+        } else {
+            saveFavorite()
+        }
         
+        sender.isSelected = !sender.isSelected
+    }
+    
+    func saveFavorite() {
+        if let id = photo?.id,
+            let data = imageView.image?.pngData() {
+            favorite = Favorite(id: id, data: data, context: dataController.viewContext)
+        }
+    }
+    
+    func deleteFavorite() {
+        guard let favoriteImage = favorite else { return }
+        dataController.viewContext.delete(favoriteImage)
+        dataController.viewContext.saveChanges()
+        self.favorite = nil
     }
 }
 
@@ -107,7 +156,7 @@ extension ImageDetailViewController: UIActivityItemSource {
     }
     
     func fetchMetaData() {
-        guard let stringURL = photo.links?.html,
+        guard let stringURL = photo?.links?.html,
             let url = URL(string: stringURL) else { return }
         
         LPMetadataProvider().startFetchingMetadata(for: url) { linkMetadata, _ in

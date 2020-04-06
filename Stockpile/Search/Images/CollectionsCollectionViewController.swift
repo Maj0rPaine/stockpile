@@ -19,7 +19,7 @@ class CollectionsCollectionViewController: UICollectionViewController {
         }
     }
         
-    var collectionViewDataSource: ImageCollectionViewDataSource<Photo, PhotoCell>!
+    var collectionViewDataSource: ImageCollectionViewDataSource<Photo, ImageCell>!
             
     let sectionInsets = UIEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 10.0)
     
@@ -28,7 +28,7 @@ class CollectionsCollectionViewController: UICollectionViewController {
         self.imageProvider = imageProvider
         self.delegate = delegate
         
-        collectionView.register(PhotoCell.self, forCellWithReuseIdentifier: PhotoCell.reuseIdentifier)
+        collectionView.register(ImageCell.self, forCellWithReuseIdentifier: ImageCell.reuseIdentifier)
         collectionViewDataSource = ImageCollectionViewDataSource(collectionView: collectionView, configure: { [weak self] (cell, photo) in
             cell.loadImage(photo: photo, imageProvider: self?.imageProvider)
         })

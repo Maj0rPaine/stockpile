@@ -8,7 +8,17 @@
 
 import UIKit
 
-class PhotoCell: UICollectionViewCell, Cell {    
+protocol Cell: class {
+    static var reuseIdentifier: String { get }
+}
+
+extension UICollectionViewCell {
+    static var reuseIdentifier: String {
+        return "\(self)"
+    }
+}
+
+class ImageCell: UICollectionViewCell, Cell {    
     lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -32,7 +42,7 @@ class PhotoCell: UICollectionViewCell, Cell {
     }
 }
 
-extension PhotoCell {
+extension ImageCell {
     func loadImage(photo: Photo, imageProvider: ImageProvider?) {
         imageView.image = placeholderImage
 
@@ -44,5 +54,11 @@ extension PhotoCell {
                 self?.imageView.image = image                
             }
         }
+    }
+    
+    func loadFavorite(favorite: Favorite) {
+        guard let data = favorite.data,
+            let image = UIImage(data: data) else { return }
+        imageView.image = image
     }
 }

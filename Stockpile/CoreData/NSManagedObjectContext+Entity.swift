@@ -14,20 +14,21 @@ extension NSManagedObjectContext {
         if self.hasChanges {
             do {
                 try save()
+                print("Context saved")
             } catch let error {
                 print(error.localizedDescription)
             }
         }
     }
     
-    func fetchImages() -> [Image]? {
-        guard let objects = try? fetch(Image.fetchRequest()) as? [Image] else { return nil }
+    func fetchFavorites() -> [Favorite]? {
+        guard let objects = try? fetch(Favorite.fetchRequest()) as? [Favorite] else { return nil }
         return objects
     }
     
-    func fetchImage(_ id: String) -> Image? {
-        let imageFetch: NSFetchRequest<Image> = Image.fetchRequest()
-        imageFetch.predicate = NSPredicate(format: "%K == %@", #keyPath(Image.id), id)
+    func fetchFavorite(_ id: String) -> Favorite? {
+        let imageFetch: NSFetchRequest<Favorite> = Favorite.fetchRequest()
+        imageFetch.predicate = NSPredicate(format: "%K == %@", #keyPath(Favorite.id), id)
         
         guard let results = try? fetch(imageFetch) else { return nil }
         return results.first

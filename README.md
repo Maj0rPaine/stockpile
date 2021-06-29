@@ -1,5 +1,5 @@
 # stockpile
 
-Demo api using Unsplash API.
+Demo app using Unsplash API.
 
 ![](Stockpile-demo.gif)
